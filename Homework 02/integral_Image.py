@@ -73,9 +73,12 @@ with dai.Device(pipeline) as device:
             width = rgb.shape[0]
             height = rgb.shape[1]
 
-            for i in range(1, width):
-                for j in range(1, height):
-                    imagecopy[i][j] = imagecopy[i - 1][j] + imagecopy[i][j - 1] - imagecopy[i - 1][j - 1] + rgb[i][j]
+#             for i in range(1, width):
+#                 for j in range(1, height):
+#                     imagecopy[i][j] = imagecopy[i - 1][j] + imagecopy[i][j - 1] - imagecopy[i - 1][j - 1] + rgb[i][j]
+                    
+            imagecopy = np.cumsum(imagecopy, axis=1).cumsum(axis=0)
+            imagecopy = cv2.normalize(imagecopy, None, 255,0, cv2.NORM_MINMAX, cv2.CV_8UC1)
                    
             cv2.imshow("IMAGE", imagecopy)
 
